@@ -1,1 +1,5 @@
 Brackpoints en TS?
+
+
+
+Poner en classroom y en slack: https://github.com/matiasgimenezagustin/Curso-Backend-TN-Marzo-NODE
