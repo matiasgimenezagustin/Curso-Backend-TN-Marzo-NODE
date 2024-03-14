@@ -1,0 +1,73 @@
+TEMAS NECESARIOS DE JS PARA BACKEND:
+
+VARIABLES/scopes
+Condicionales
+Bucles (for, for of)
+funciones (arrow function)
+Objetos y arrays
+Metodos de array (push, splice, map, forEach, filter, find, includes)
+
+recomendado:
+Async/await .then catch y las promesas
+Clases de js
+eventos / dom (mas adelante, aprox mitad de cursada volvemos a ver frontend)
+
+
+Cecilia
+TEMAS NECESARIOS DE JS PARA BACKEND:
+
+VARIABLES/scopes
+Condicionales
+Bucles (for, for of)
+funciones (arrow function) 
+Objetos y arrays
+Metodos de array (push, splice, map, forEach, filter, find )
+
+
+(Includes no lo vieron)
+
+recomendado:
+Async/await .then catch y las promesas
+Clases de js
+eventos / dom (mas adelante, aprox mitad de cursada volvemos a ver frontend)
+
+
+Yanel
+TEMAS NECESARIOS DE JS PARA BACKEND:
+
+VARIABLES/scopes
+Condicionales
+Bucles (for, for of)
+funciones (arrow function) 
+Objetos y arrays
+Metodos de array (push, splice, map, forEach, filter, find, includes)
+
+(Includes no lo vieron, splice)
+
+recomendado:
+Async/await .then catch y las promesas
+Clases de js
+eventos / dom (mas adelante, aprox mitad de cursada volvemos a ver frontend)
+
+
+Lucas
+TEMAS NECESARIOS DE JS PARA BACKEND:
+
+VARIABLES/scopes
+Condicionales
+Bucles (for, for of)
+funciones (arrow function)
+Objetos y arrays
+Metodos de array (push, splice, map, forEach, filter, find, includes)
+
+recomendado:
+Async/await .then catch y las promesas
+Clases de js
+eventos / dom (mas adelante, aprox mitad de cursada volvemos a ver frontend)
+
+
+
+PRACTICA:
+
+https://docs.google.com/document/d/1wPi6o8t8cGyhAoGfW9RHIGNQrefuia__g2f9CH4QY5Q/edit?usp=sharing
+https://docs.google.com/document/d/1KUix7ZROwgvJj07Wobgxj2UMS_wG5u-ScX8570dHuJI/edit?usp=sharing
