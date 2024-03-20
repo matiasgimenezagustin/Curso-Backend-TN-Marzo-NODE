@@ -224,3 +224,26 @@ Si se puede gastar
 Restar el dinero_gastado al dinero del personaje
 dira 'El personaje {nombre de personaje} ha gastado {dinero gastado} y se queda con {dinero}'
 */
+
+
+class Mochila extends Item {
+    static TIPOS_BOLSILLO = {
+        BOLSILLITO: 'BOLSILLITO',
+        BOLSILLO_PRINCIPAL: 'BOLSILLO_PRINCIPAL',
+        BOLSILLO_SECUNDARIO: 'BOLSILLO_SECUNDARIO'
+    }
+    constructor(nombre, categoria, nivel, costo, id) {
+        super(nombre, categoria, nivel, costo, id)
+        this.espacios = {
+            [Mochila.TIPOS_BOLSILLO.BOLSILLITO]: [],
+            [Mochila.TIPOS_BOLSILLO.BOLSILLO_PRINCIPAL]: [],
+            [Mochila.TIPOS_BOLSILLO.BOLSILLO_SECUNDARIO]: []
+        }
+    }
+
+    guardar (item,TIPOS_BOLSILLO_SELECCIONADO) {
+        this.espacios[TIPOS_BOLSILLO_SELECCIONADO].push(item)
+    }
+}
+
+
