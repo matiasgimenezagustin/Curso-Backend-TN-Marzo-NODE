@@ -17,15 +17,19 @@ console.log('llevo dentro del camion una ' + camion['mesa'])
 
 console.log(sillita)
 
-const usuario = {
+/* const usuario = {
     'Nombre Completo': 'pepe',
     'edad': 18
-}
+} */
 
 console.log(usuario)
 const {['Nombre Completo'] : nombre_usuario, edad: edad_usuario} = usuario
 
-const {nombre} = obtenerDatos()
-
+/* const {nombre} = obtenerDatos()
+ */
 console.log(nombre, edad_usuario)
+
+/* const {
+    ['NOMBRESIT 0']: nombre
+} = obtnerDatosUsuario() */
 

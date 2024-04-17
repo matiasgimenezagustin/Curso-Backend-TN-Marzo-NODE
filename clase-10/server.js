@@ -69,7 +69,7 @@ Invocar la funcion en app.js y desestructurar los resultados para obtener las si
     id_usuario
 
 */
-
+//EJEMPLO:
 const DATOS_USUARIO = {
     'NOMBRESIT 0': 'diogenes',
     DNI_usuariO: '33211343',
