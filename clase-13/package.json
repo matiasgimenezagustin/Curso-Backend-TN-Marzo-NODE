@@ -1,0 +1,19 @@
+{
+  "name": "prueba-express",
+  "version": "1.0.0",
+  "description": "nada",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "nodemon test.js",
+    "dev": "nodemon server.js"
+  },
+  "author": "matu.dev",
+  "license": "ISC",
+  "dependencies": {
+    "express": "4.19.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}

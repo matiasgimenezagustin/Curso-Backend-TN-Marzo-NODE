@@ -91,4 +91,31 @@ personaje_principal.mochila.guardar(mate, Mochila.TIPOS_BOLSILLO.BOLSILLITO)
 
 personaje_principal.mochila.observar(Mochila.TIPOS_BOLSILLO.BOLSILLITO)
 
+const empleados = [
+    {
+        nombre: 'pepe',
+        sueldo_base: 500,
+        bono: 20
+    },
+    {
+        nombre: 'juan',
+        sueldo_base: 700
+    }
+]
 
+const buscarEmpleado = async ( ) =>{
+    /* Logica para buscar en la db */
+}
+
+
+const calcularSueldo = async (id_empleado) =>{
+    try{
+        const empleado = await buscarEmpleado(id_empleado) //es asincronico
+        const plata_disponible = await buscarPlataDisponible('clave-123')
+        const sueldo_a_pagar = empleado.sueldo_base + empleado.bono /* number + undefined = NaN type number */
+        return sueldo_a_pagar //NaN
+    }
+    catch(error){
+        throw new Error(error.message)
+    }
+} 
