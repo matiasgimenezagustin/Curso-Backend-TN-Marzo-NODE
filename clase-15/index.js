@@ -1,6 +1,12 @@
+const dotenv = require('dotenv')
+dotenv.config() /* Obtiene todos los valores en mi archivo .env y lo guarda en el objeto global process */
+
+
+
 const express = require('express')
 const { findProductById } = require('./products')
 const { authMiddleware } = require('./middlewares')
+
 
 const app = express()
 const PORT = 3000
@@ -17,12 +23,12 @@ app.get('/', (request, response)=>{
 app.get('/ruta-protegida', (request, response) =>{
     console.log(request.headers)
     const api_key = request.headers['x-api-key']
-    if(api_key == API_KEY){
+    /* if(api_key == API_KEY){
         response.status(200).json({ok: true, message: 'Has sido autorizado'})
     }
     else{
         response.status(401).json({ok: false, message: 'Invalid api-key'})
-    }
+    } */
 })
 
 app.get('/product/:id_product', (request, response)=>{
@@ -41,6 +47,11 @@ app.get('/product/:id_product', (request, response)=>{
     }
 })
 
+
+app.post('/api/products', (request, response)  =>{
+    console.log(request.body)
+    response.json({ok: true, mensaje: 'data recibida'})
+} )
 
 
 
