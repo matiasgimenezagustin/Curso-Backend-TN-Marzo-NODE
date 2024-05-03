@@ -23,10 +23,37 @@ app.get('/test',  (req, res) =>{
 })
 
 
+
 app.get('/home', (req, res) =>{
-    res.render('home')
+
+    const usuario = {
+        name: 'pepe',
+        isAdmin: false
+    }
+    res.render('home', usuario )
 })
 
+
+app.get('/products',(req, res) =>{
+    const products  = [
+        {
+            name: 'tv samsung',
+            price: 3000,
+            id: 1
+        },
+        {
+            name: 'Iphone ',
+            price: 1500,
+            id: 2
+        },
+        {
+            name: 'Iphone 19',
+            price: 4000,
+            id: 3
+        }
+    ]
+    res.render('products', {products})
+})
 
 
 

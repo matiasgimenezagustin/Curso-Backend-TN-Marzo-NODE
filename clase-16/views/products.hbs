@@ -16,12 +16,16 @@
             <a href="" class="link">Servicios</a>
         </nav>
     </header>
-    <h1 class="titulo">{{name}}</h1>
-    {{#if isAdmin}} 
-        <button>Administrar pagina</button>
-        {{else}}
-        <h2>Hola usuario :D</h2>
-    {{/if}}
-    Hola desde handlebars
+    <h1 class="titulo">Lista de productos</h1>
+    <section>
+        {{#each products}}
+            <div>
+                <h2>{{this.name}}</h2>
+                <span>Precio: ${{this.price}}</span>
+                <a href="">Ver detalle</a>
+                <hr>
+            </div>
+        {{/each}}
+    </section>
 </body>
 </html>
