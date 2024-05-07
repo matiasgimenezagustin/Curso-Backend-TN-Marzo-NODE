@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style/style.css">
+</head>
+<body>
+    <header>
+        <h2 class="logo">Brand Name</h2>
+        <nav>
+            <a href="" class="link">Productos</a>
+            <a href="" class="link">Contacto</a>
+            <a href="" class="link">Planes</a>
+            <a href="" class="link">Servicios</a>
+        </nav>
+    </header>
+    <h1 class="titulo">{{name}}</h1>
+    {{#if isAdmin}} 
+        <button>Administrar pagina</button>
+        {{else}}
+        <h2>Hola usuario :D</h2>
+    {{/if}}
+    Hola desde handlebars
+</body>
+</html>
