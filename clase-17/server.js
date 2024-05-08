@@ -120,6 +120,41 @@ app.post('/products', (req, res) =>{
 })
 
 
+app.get('/register', (req, res) =>{
+    res.render('register')
+})
+
+
+const users = []
+
+const registerUser = (userToRegister) =>{
+    //Verificar que no exista un usuario con x email
+    //some
+    if(!users.some(user => user.email === userToRegister.email )){
+        users.push(userToRegister)
+        return {message: 'User created!', ok: true}
+    }
+    else{
+        return {message: 'Existent user email, please use other email', ok: false}
+    }
+   
+   
+}
+
+
+app.post('/register', (req, res) =>{
+    const { email, password } = req.body 
+    const response = registerUser({email, password})
+    if(response.ok){
+        res.redirect('/home')
+    }
+    else{
+        res.render('register', {errorText: response.message})
+    }
+    
+})
+
+
 
 
 
