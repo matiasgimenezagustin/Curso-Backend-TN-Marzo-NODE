@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="./style/style.css">
+</head>
+
+<body>
+    <h1>Log in</h1>
+    <form action="/login" method="POST">
+        <div class="input-container">
+            <label for="email">Ingresa tu email:</label><br>
+            <input type="email" id="email" name="email">
+        </div>
+        <div class="input-container">
+            <label for="password">Ingresa tu contraseña:</label><br>
+            <input type="password" required name="password" id="password"> 
+        </div>
+        {{#if errorText}}
+            <span class="error">{{errorText}}</span>
+        {{/if}}
+        
+        <button type="submit">Iniciar sesion</button>
+    </form>
+</body>
+
+</html>

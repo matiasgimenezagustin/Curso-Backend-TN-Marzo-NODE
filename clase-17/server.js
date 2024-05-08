@@ -3,6 +3,7 @@ const { productsRoute } = require('./router/products.route')
 const { userRoute } = require('./router/user.route')
 const hbs = require('hbs')
 const { CATEGORIAS_PRODUCTOS } = require('./utils/diccionarios')
+const bcrypt = require('bcrypt')
 
 const app = express()
 
@@ -124,13 +125,16 @@ app.get('/register', (req, res) =>{
     res.render('register')
 })
 
+/* 'pepe'  => 'sdadhsaodjowqdwqodbnpcbhasodcjds'*/
 
 const users = []
 
-const registerUser = (userToRegister) =>{
+const registerUser = async (userToRegister) =>{
     //Verificar que no exista un usuario con x email
     //some
     if(!users.some(user => user.email === userToRegister.email )){
+        const hashedPassword = await bcrypt.hash(userToRegister.password, 10)
+        console.log(hashedPassword)
         users.push(userToRegister)
         return {message: 'User created!', ok: true}
     }
@@ -140,11 +144,13 @@ const registerUser = (userToRegister) =>{
    
    
 }
+/* 
+Si mi controlador ejecuta una funcion asincrona debe ser declarada con async y debe usar await previo a la ejecucion de la funcion asincrona
+*/
 
-
-app.post('/register', (req, res) =>{
+app.post('/register', async (req, res) =>{
     const { email, password } = req.body 
-    const response = registerUser({email, password})
+    const response = await registerUser({email, password})
     if(response.ok){
         res.redirect('/home')
     }
@@ -155,7 +161,14 @@ app.post('/register', (req, res) =>{
 })
 
 
+app.get('/login', (req, res)=>{
+    res.render('login')
+})
 
+
+app.post('/login', (req, res)=>{
+    /* Aqui va la logica de login */
+})
 
 
 
@@ -170,8 +183,17 @@ app.use('/api/user', userRoute)
 
 
 
+
 app.listen(3000, () =>{
     console.log(`El servidor se esta escuchando en http://localhost:${PORT}`)
 })
 
+/* const prueba = async () =>{
+    const hash = await bcrypt.hash('pepe', 10)
 
+    const comparacion = await bcrypt.compare('pepe', '$2b$10$IFphkn2mhTtYjHJtX66QVOvm.2YG.cqSJWCM5NXcl2u3oHHmHX9Fq')
+    console.log(comparacion)
+}
+
+
+prueba() */
