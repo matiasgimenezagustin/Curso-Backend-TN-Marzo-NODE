@@ -4,6 +4,7 @@ const { userRoute } = require('./router/user.route')
 const hbs = require('hbs')
 const { CATEGORIAS_PRODUCTOS } = require('./utils/diccionarios')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 const app = express()
 
@@ -12,6 +13,7 @@ const PORT = 3000
 
 app.use(express.static(__dirname + '/public'))
 app.use(express.urlencoded({extended: true}))
+app.use(express.json())
 
 /* El motor de vistas utilizado en esta app es handlebars */
 app.set('view engine', 'hbs')
@@ -134,7 +136,8 @@ const registerUser = async (userToRegister) =>{
     //some
     if(!users.some(user => user.email === userToRegister.email )){
         const hashedPassword = await bcrypt.hash(userToRegister.password, 10)
-        console.log(hashedPassword)
+   
+        userToRegister.password = hashedPassword
         users.push(userToRegister)
         return {message: 'User created!', ok: true}
     }
@@ -166,12 +169,40 @@ app.get('/login', (req, res)=>{
 })
 
 
-app.post('/login', (req, res)=>{
+app.post('/login', async (req, res)=>{
+
+    let { email, password, try_counter} = req.body
+    console.log(req.body)
+
+    const existentUser = users.find(user => user.email === email)
+    
+    try_counter = try_counter ? ++try_counter : 1
+
+    let repeated_limit = try_counter > 2 
+    if(existentUser){
+        const sonIguales = await bcrypt.compare(password, existentUser.password)
+        console.log(existentUser,sonIguales)
+        if(sonIguales){
+            /* CASO CORRECTO */
+            const token = jwt.sign({email}, 'ffbea63b-3940-47e9', {expiresIn: '5d'})
+
+            res.status(200).json({ok: true, message: 'Logeado con exito', token})
+        }
+        else{
+            /* Devuelve una plantilla HTML PEROO deberia devolver un objeto */
+            res.render('login', {errorText: 'Contraseña incorrecta', try_counter, repeated_limit})
+        }
+    }
+    else{
+        res.render('login', {errorText: 'Usuario no existente', try_counter, repeated_limit })
+    }
     /* Aqui va la logica de login */
 })
 
 
-
+app.post('/validar-token', (req, res) =>{
+    /* Logica para validar el token */
+})
 
 
 /* Asociar que el endpoint '/api/products' debe ir al productsRoute */
@@ -184,9 +215,12 @@ app.use('/api/user', userRoute)
 
 
 
+
+
 app.listen(3000, () =>{
     console.log(`El servidor se esta escuchando en http://localhost:${PORT}`)
 })
+
 
 /* const prueba = async () =>{
     const hash = await bcrypt.hash('pepe', 10)

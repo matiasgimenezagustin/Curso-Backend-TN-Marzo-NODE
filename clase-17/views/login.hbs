@@ -10,7 +10,7 @@
 
 <body>
     <h1>Log in</h1>
-    <form action="/login" method="POST">
+    <form  id="login-form">
         <div class="input-container">
             <label for="email">Ingresa tu email:</label><br>
             <input type="email" id="email" name="email">
@@ -19,12 +19,55 @@
             <label for="password">Ingresa tu contraseña:</label><br>
             <input type="password" required name="password" id="password"> 
         </div>
+        <input type="hidden" value="{{try_counter}}" name="try_counter"/>
         {{#if errorText}}
             <span class="error">{{errorText}}</span>
+        {{/if}}
+
+        {{#if repeated_limit}}
+            <a>Recuperar contraseña</a>
         {{/if}}
         
         <button type="submit">Iniciar sesion</button>
     </form>
+
+
+    <script>
+
+        const formHTML = document.getElementById('login-form')
+
+        const login = async (event) =>{
+            event.preventDefault()
+            //Estos son los inputs
+            let {email, password} = formHTML
+
+            //llamo al valor del input
+            email = email.value
+            password = password.value
+            const user = {email, password}
+            const response = await fetch('./login', 
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(user)
+                }
+            )
+            //esta es la response HTTP
+            console.log(response)
+
+            const data = await response.json()
+            console.log(data)
+            localStorage.setItem('auth_token', data.token)
+            
+
+            //DOM (document object model) vs BOM (browser objet model)
+            location.href = '/home' //redirecciona a home
+        }
+        formHTML.addEventListener('submit', login)
+       
+    </script>
 </body>
 
 </html>
