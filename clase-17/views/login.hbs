@@ -20,9 +20,9 @@
             <input type="password" required name="password" id="password"> 
         </div>
         <input type="hidden" value="{{try_counter}}" name="try_counter"/>
-        {{#if errorText}}
-            <span class="error">{{errorText}}</span>
-        {{/if}}
+       
+        <span class="error"></span>
+
 
         {{#if repeated_limit}}
             <a>Recuperar contraseña</a>
@@ -56,14 +56,22 @@
             )
             //esta es la response HTTP
             console.log(response)
-
-            const data = await response.json()
-            console.log(data)
-            localStorage.setItem('auth_token', data.token)
+            if(response.status == 200){
+                const data = await response.json()
             
+                console.log(data)
+                localStorage.setItem('auth_token', data.token)
+                
 
-            //DOM (document object model) vs BOM (browser objet model)
-            location.href = '/home' //redirecciona a home
+                //DOM (document object model) vs BOM (browser objet model)
+                location.href = '/home' //redirecciona a home
+            }
+            else{
+                const spanErrorHTML = document.querySelector('.error')
+                const data = await response.json()
+                console.error(data.errorText)
+                spanErrorHTML.innerText = data.errorText
+            }
         }
         formHTML.addEventListener('submit', login)
        

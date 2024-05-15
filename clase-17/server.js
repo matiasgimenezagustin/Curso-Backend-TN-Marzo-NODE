@@ -190,11 +190,11 @@ app.post('/login', async (req, res)=>{
         }
         else{
             /* Devuelve una plantilla HTML PEROO deberia devolver un objeto */
-            res.render('login', {errorText: 'Contraseña incorrecta', try_counter, repeated_limit})
+            res.status(400).json({errorText: 'Contraseña incorrecta', try_counter, repeated_limit})
         }
     }
     else{
-        res.render('login', {errorText: 'Usuario no existente', try_counter, repeated_limit })
+        res.status(404).json( {errorText: 'Usuario no existente', try_counter, repeated_limit })
     }
     /* Aqui va la logica de login */
 })
