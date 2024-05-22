@@ -6,6 +6,9 @@ const registerService = (user) =>{
         
         throw {message: 'Inexistent email or password', status: 400}
     }
+    if(!email.includes('@')){
+        throw {message: 'Email incorrect', status: 400}
+    }
     buscarUsuarioPorEmail()
 
 }   
