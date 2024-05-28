@@ -4,10 +4,13 @@ const { loginController, registerController, verifyTokenController } = require('
 const authRouter = express.Router()
 
 
-/* /api/auth/login */
-authRouter.post('/login', loginController)
+
 /* /api/auth/register */
 authRouter.post('/register', registerController)
+
+/* /api/auth/login */
+authRouter.post('/login', loginController)
+
 /* /api/auth/verify-token */
 authRouter.post('/verify-token', verifyTokenController)
 

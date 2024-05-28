@@ -1,7 +1,14 @@
 const express = require('express')
 const dotenv = require('dotenv')
-const { authRouter } = require('./auth/auth.router')
 dotenv.config()
+
+const {database} = require('./config/connection.sql')
+
+const { authRouter } = require('./auth/auth.router')
+
+
+
+
 const PORT = process.env.PORT || 4000
 const app = express()
 
