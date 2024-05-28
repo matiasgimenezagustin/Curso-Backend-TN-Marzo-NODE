@@ -1,28 +1,31 @@
-const { database } = require("../config/connection.sql")
+const { database, query} = require("../config/connection.sql")
 const bcrypt = require('bcrypt')
 
 //promisfy
-const buscarUsuarioPorEmail = (email) =>{
+const buscarUsuarioPorEmail = async (email) =>{
      /* Hacemos un select para verificar si previamente existe un usuario con este mail */
-    const consultaExistencia = `SELECT * FROM usuarios WHERE email = ?`
-    database.query(consultaExistencia, [email], (error, resultados) =>{
-        if(error){
-            console.error('SQL_Error al seleccionar usuarios por email', error)
-            throw {status: 500, message: 'ERROR INTERNO EN LA BASE DE DATOS'}
+    try {
+        const consultaExistencia = `SELECT * FROM usuarios WHERE email = ?`
+        const resultados = await query(consultaExistencia, [email])
+        if(resultados.length > 0){
+            console.log(resultados)
+            return resultados[0]
         }
         else{
-            if(resultados.length > 0){
-                console.log(resultados)
-                return resultados[0]
-            }
-            else{
-                return null
-            }
+            return null
         }
-    })
+    }
+    catch (error) {
+        console.error('SQL_Error al seleccionar usuarios por email', error)
+        /* throw {status: 500, message: 'ERROR INTERNO EN LA BASE DE DATOS'} */
+    }
 }
-/* buscarUsuarioPorEmail('juan@gmail.com') */
 
+
+buscarUsuarioPorEmail('pepe@gmail.com')
+.then(resultado =>{
+    console.log('respuesta:', resultado)
+})
 
 
 
@@ -31,7 +34,7 @@ const buscarUsuarioPorEmail = (email) =>{
 
 const guardarUsuario = async (usuario) =>{
     try{
-        const usuarioExistente =  buscarUsuarioPorEmail(usuario.email) //usuario | null
+        const usuarioExistente = await buscarUsuarioPorEmail(usuario.email) //usuario | null
 
         if(usuarioExistente){
             throw {status: 400, message: 'ERROR: email ya registrado'}
@@ -44,20 +47,19 @@ const guardarUsuario = async (usuario) =>{
             email: usuario.email,
             password: passwordHash
         }
-        database.query(consulta, nuevoUsuario, (error, resultado) =>{
-            if(error){
-                console.error('SQL_Error al intentar insertar un usuario', error)
-            }
-            else{
-                console.log("Se inserto el usuario")
-            }
-        } )
+
+        const resultado = await query(consulta, nuevoUsuario)
+        
+        console.log("Se inserto el usuario")
+
     }
     catch(error){
-
+        console.error('SQL_Error al intentar insertar un usuario', error)
     }
     
 }
+
+guardarUsuario({email: 'juancito@gmail.com', password: 'pepe123'})
 
 
 
@@ -95,10 +97,42 @@ const test = async  (usuario) =>{
         }
     })
 }
-test({email: 'pee@gmail.com', password: 'pepe123'})
 
 
 /* guardarUsuario({email: 'pepe@gmail.com', password: 'pepe123'})
  */
 
 module.exports = {buscarUsuarioPorEmail, guardarUsuario}
+
+
+
+/* 
+fn primeraConsulta 
+fn segundaConsulta
+
+primeraConsulta(data, handler)
+primeraConsulta(data, (error, resultados) => {
+    if(error){
+        tirarError()
+    }
+    else{
+        //Si no hay errores hare la segunda consulta
+        segundaConsulta(data, (error, resultados)=>{
+            if(error){
+                tirarError()
+            }
+        })
+    }
+})
+
+try{
+    const results = await primeraConsulta(data)
+    if(results){
+        const resultados = await segundaConsulta(data)
+    }
+}
+catch(err){
+    console.log(err)
+}
+
+*/
