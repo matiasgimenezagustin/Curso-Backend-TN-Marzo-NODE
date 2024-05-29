@@ -4,10 +4,11 @@ const loginController =  (req, res)=> {
     res.status(200).json({ok: true})
 }
 
-const registerController = (req, res) =>{
+const registerController = async (req, res) =>{
     const {email, password} = req.body
     try{
-        const result = registerService({email: email, password: password})
+        const result = await registerService({email: email, password: password})
+        res.status(200).json(result)
     }
     catch(error){
         res.status(error.status).json(error)
