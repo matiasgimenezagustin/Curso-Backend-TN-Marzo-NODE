@@ -1,7 +1,7 @@
 const { buscarUsuarioPorEmail, insertarUsuario} = require("./auth.repository")
 const bcrypt = require('bcrypt')
 const { validacionUsuario } = require("./utils/validationUser.util")
-
+const jwt = require('jsonwebtoken')
 
 const registerService = async (usuario) =>{
     try{
@@ -42,7 +42,15 @@ const loginService = async (usuario) =>{
         if(!usuarioExistente){
             throw { status: 400, message: 'No existe usuario con ese email'}
         }
-
+        console.log(usuarioExistente)
+        const esCorrecta = await bcrypt.compare(password, usuarioExistente.password)
+        if(!esCorrecta){
+            throw { status: 400, message: 'Contraseña incorrecta'}
+        }
+        else{
+            const token = jwt.sign({email}, 'clave-secreta', {expiresIn: '1h'})
+            return token
+        }
     }
     catch(error){   
 
@@ -54,8 +62,6 @@ const loginService = async (usuario) =>{
         }
     }
 }
-
-
 
 
 module.exports = {registerService, loginService}
