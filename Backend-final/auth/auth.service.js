@@ -1,17 +1,12 @@
 const { buscarUsuarioPorEmail, insertarUsuario} = require("./auth.repository")
 const bcrypt = require('bcrypt')
+const { validacionUsuario } = require("./utils/validationUser.util")
 
 
 const registerService = async (usuario) =>{
     try{
         const {email, password} = usuario
-
-        if(!email || !password){
-            throw {message: 'Inexistent email or password', status: 400}
-        }
-        if(!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))){
-            throw {message: 'Email incorrect', status: 400}
-        }
+        validacionUsuario({email, password})
 
         const usuarioExistente = await buscarUsuarioPorEmail(usuario.email) //usuario | null
 
@@ -39,7 +34,28 @@ const registerService = async (usuario) =>{
 }   
 
 
+const loginService = async (usuario) =>{
+    try{
+        const {email, password} = usuario
+        validacionUsuario(usuario)
+        const usuarioExistente = await buscarUsuarioPorEmail(usuario.email)
+        if(!usuarioExistente){
+            throw { status: 400, message: 'No existe usuario con ese email'}
+        }
+
+    }
+    catch(error){   
+
+        if(error.status){
+            throw error
+        }
+        else{
+            throw {status: 500, message: 'Error interno del servidor'}
+        }
+    }
+}
 
 
 
-module.exports = {registerService}
+
+module.exports = {registerService, loginService}
