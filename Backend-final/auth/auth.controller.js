@@ -1,5 +1,6 @@
+const { validacionExistencia } = require("../helpers/validation.helper")
 const {registerService,loginService} = require("./auth.service")
-
+const jwt = require('jsonwebtoken')
 
 
 
@@ -27,7 +28,17 @@ const registerController = async (req, res) =>{
 }
 
 const verifyTokenController = (req, res) =>{
-
+    const token = req.headers['Authorization']
+    if(!validacionExistencia(token) && isNaN(token)){
+        res.status(400).json({status:400, message: 'Debes proporcionar un token valido'})
+    }
+    const esValido = jwt.verify(token, process.env.JWT_SECRET_KEY)
+    if(!esValido){
+        res.status(401).json({status: 401, message: 'Sin autorizacion token invalido'})
+    }
+    else{
+        res.status(200).json({status:200, message: 'Token valido, usuario logueado'})
+    }
 }
 
 
