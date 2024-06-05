@@ -29,8 +29,9 @@ const registerController = async (req, res) =>{
 }
 
 const verifyTokenController = (req, res) =>{
-    const token = req.headers['Authorization']
-    if(!validacionExistencia(token) && isNaN(token)){
+    const token = req.headers['authorization']
+
+    if(!validacionExistencia(token) || !isNaN(token) || token === 'null' || token === 'undefined'){
         res.status(400).json({status:400, message: 'Debes proporcionar un token valido'})
     }
     const esValido = jwt.verify(token, process.env.JWT_SECRET_KEY)

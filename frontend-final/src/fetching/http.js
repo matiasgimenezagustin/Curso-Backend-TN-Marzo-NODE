@@ -2,8 +2,13 @@
 
 
 export const HTTP = {
-    GET: (url) =>{
-        
+    GET: async (url, headers) =>{
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: headers
+  
+        })
+        return response.json()
     },
     POST: async (url, body) =>{
         const response = await fetch(url, {

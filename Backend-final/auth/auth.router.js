@@ -12,7 +12,7 @@ authRouter.post('/register', registerController)
 authRouter.post('/login', loginController)
 
 /* /api/auth/verify-token */
-authRouter.post('/verify-token', verifyTokenController)
+authRouter.get('/verify-token', verifyTokenController)
 
 
 module.exports = {authRouter}
