@@ -6,9 +6,27 @@ const ROUTE = '/api/auth'
 export const login = async (usuario) => {
     try{
         const result = await HTTP.POST(URL.URL_API + ROUTE + '/login' , usuario)
-        console.log(result)
+        if(!result.ok){
+            throw result /* El formato {status: 400, message: 'inexistent email'} */
+        }
     }
     catch(error){
-        console.error('Error en logueo', error)
+        /* console.error('Error en logueo', error) */
+        throw {message: error.message}
     }
 }
+
+
+export const registrar = async (usuario) => {
+    try{
+        const result = await HTTP.POST(URL.URL_API + ROUTE + '/register' , usuario)
+        if(!result.ok){
+            throw result
+        }
+    }
+    catch(error){
+        /* console.error('Error en logueo', error) */
+        throw {message: error.message}
+    }
+}
+
