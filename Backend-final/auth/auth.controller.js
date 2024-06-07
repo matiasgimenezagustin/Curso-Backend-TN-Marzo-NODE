@@ -5,8 +5,8 @@ const jwt = require('jsonwebtoken')
 
 
 const loginController = async (req, res)=> {
+
     const {email, password} = req.body
-    console.log(req.body)
     try{
         const token = await loginService({email, password})
         res.status(200).json({ok: true, message: 'Usuario logueado', token: token})

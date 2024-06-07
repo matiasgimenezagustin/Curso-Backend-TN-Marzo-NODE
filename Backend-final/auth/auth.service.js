@@ -42,7 +42,7 @@ const loginService = async (usuario) =>{
         if(!usuarioExistente){
             throw { status: 400, message: 'No existe usuario con ese email'}
         }
-        console.log(usuarioExistente)
+
         const esCorrecta = await bcrypt.compare(password, usuarioExistente.password)
         if(!esCorrecta){
             throw { status: 400, message: 'Contraseña incorrecta'}
@@ -65,3 +65,4 @@ const loginService = async (usuario) =>{
 
 
 module.exports = {registerService, loginService}
+
