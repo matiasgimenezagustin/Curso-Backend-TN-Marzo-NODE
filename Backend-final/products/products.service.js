@@ -1,4 +1,5 @@
-const { insertarProducto, seleccionarProductoPorId } = require("./products.repository")
+const { CustomError } = require("../errors/customErrorManager")
+const { insertarProducto, seleccionarProductoPorId, deleteProductoPorId, seleccionarProductos } = require("./products.repository")
 const { validarPropiedadesProducto } = require("./utils/validarProducto")
 
 const crearProducto = async (producto) =>{
@@ -40,7 +41,38 @@ const obtenerProductoPorId = async (pid) =>{
 }
 
 
-module.exports = {crearProducto, obtenerProductoPorId}
+
+const eliminarProductoPorId = async (pid)=>{
+    try{
+        const producto = await deleteProductoPorId (pid)
+        return {ok:true, status:200, producto}
+    }
+    catch (error){
+        if(error.status){
+            throw error
+        }
+        else{
+            throw {status:500, message: "Error interno del servidor"}
+        }
+    }
+}
+
+
+const buscarProductos = async () => {
+    try{
+        const productos = await seleccionarProductos()
+        if(productos.length === 0){
+            throw new CustomError('No hay productos', 404)
+        }
+        return {status: 200, message: 'productos obtenidos', productos: productos}
+    }
+    catch(error){
+        throw error
+    }
+} 
+
+
+module.exports = {crearProducto, obtenerProductoPorId, eliminarProductoPorId, buscarProductos}
 
 
 
@@ -81,3 +113,6 @@ module.exports = {crearProducto, obtenerProductoPorId}
 //     return (typeof valor1 === 'string' && valor1.length > 5 && valor1 === valor2)
 // }
 // module.exports = {validacionEmail, validacionExistencia,validacionString,validacionLongitud,validacionStock,validacionCodigo,validacionFecha,validarIngresoProducto,validacionPassword}
+
+
+
