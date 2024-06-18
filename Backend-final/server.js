@@ -7,6 +7,7 @@ const {database} = require('./config/connection.sql')
 
 const { authRouter } = require('./auth/auth.router')
 const { productRouter } = require('./products/products.router')
+const { cartsRouter } = require('./carts/carts.router')
 
 
 
@@ -20,7 +21,7 @@ app.use(express.json())
 
 app.use('/api/auth', authRouter)
 app.use('/api/products', productRouter)
-
+app.use('/api/carts', cartsRouter)
 
 /* TODO: verificar API-KEY */
 
