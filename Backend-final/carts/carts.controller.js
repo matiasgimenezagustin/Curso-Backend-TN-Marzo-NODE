@@ -1,4 +1,4 @@
-const { agregarAlCarrito } = require("./carts.service")
+const {agregarAlCarritoService } = require("./carts.service")
 
 const postCartController = async (req, res) =>{
     const {product_id, cantidad} = req.body 
@@ -8,7 +8,8 @@ const postCartController = async (req, res) =>{
 
     /* Agregan las validaciones de los datos o lo hacen en service*/
     try{
-        await agregarAlCarrito({user_id, product_id, cantidad})
+        const result = await agregarAlCarritoService({user_id: user.user_id, product_id, cantidad})
+        res.status(result.status).json(result)
     }
     catch(error){
         res.status(error.status).json(error)
