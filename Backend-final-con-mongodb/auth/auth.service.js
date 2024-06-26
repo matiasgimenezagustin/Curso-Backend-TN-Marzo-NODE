@@ -66,7 +66,3 @@ const loginService = async (usuario) =>{
 
 module.exports = {registerService, loginService}
 
-
-
-
-await fetch()
